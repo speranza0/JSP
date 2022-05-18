@@ -1,7 +1,7 @@
 package com.javalec.ex;
 
-import jakarta.servlet.ServletContextEvent;
-import jakarta.servlet.ServletContextListener;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 
 public class ServletL implements ServletContextListener {
 	
