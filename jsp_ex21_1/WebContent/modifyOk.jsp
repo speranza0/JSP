@@ -1,7 +1,9 @@
 <%@page import="jsp_ex21_1.MemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<% request.setCharacterEncoding("EUC-KR"); %>
+<%
+request.setCharacterEncoding("EUC-KR");
+%>
 
 <jsp:useBean id="dto" class="jsp_ex21_1.MemberDTO" scope="page" />
 <jsp:setProperty name="dto" property="*" />
