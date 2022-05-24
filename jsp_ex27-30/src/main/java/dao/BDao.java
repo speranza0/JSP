@@ -30,11 +30,13 @@ public class BDao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "insert into mvc_board (bId, bName, bTitle, bContent, bHit, bGroup, bStep, bIndent) values (mve_board_seq.nextval, ? ,?, ?, 0, mve_board_seq.currval, 0, 0)";
+			String query = "insert into mvc_board (bId, bName, bTitle, bContent, bHit, bGroup, bStep, bIndent) values (nextval(mvc_board_seq), ?, ?, ?, 0, lastval(mvc_board_seq), 0, 0)";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, bName);
 			preparedStatement.setString(2, bTitle);
 			preparedStatement.setString(3, bContent);
+			
+			int rn = preparedStatement.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -56,7 +58,7 @@ public class BDao {
 		try {
 			connection = dataSource.getConnection();
 			
-			String query = "select bId, bName, bTitle, bContent, bDate, bHit, bGroup, bStep, bIndent from mvc_board oredr by bGroup desc, bStep asc";
+			String query = "select bId, bName, bTitle, bContent, bDate, bHit, bGroup, bStep, bIndent from mvc_board order by bGroup desc, bStep asc";
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 			
@@ -138,7 +140,7 @@ public class BDao {
 		try {
 			connection = dataSource.getConnection();
 			
-			String query = "update mvc_board set bName = ?, bTitle = ?, bContent = ?, where bId = ?";
+			String query = "update mvc_board set bName = ?, bTitle = ?, bContent = ? where bId = ?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, bName);
 			preparedStatement.setString(2, bTitle);
@@ -231,7 +233,7 @@ public class BDao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "insert into mvc_board (bId, bName, bTitle, bContent, bGroup, bStep, bIndent) values (mvc_board_se.nextval, ?, ?, ?, ?, ?, ?)";
+			String query = "insert into mvc_board (bId, bName, bTitle, bContent, bGroup, bStep, bIndent) values (nextval(mvc_board_seq), ?, ?, ?, ?, ?, ?)";
 			preparedStatement = connection.prepareStatement(query);
 			
 			preparedStatement.setString(1, bName);
