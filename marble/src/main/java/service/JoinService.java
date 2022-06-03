@@ -13,6 +13,7 @@ public class JoinService {
 	
 	public void joinProcess(JoinParam param) {
 		// DB에 접속해서 회원가입 처리한다.
+		memberMapper.selectOneById(param.getId());
 		memberMapper.createMember(param);
 		memberMapper.createDiceTable(param.getId());
 	}

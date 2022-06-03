@@ -66,7 +66,7 @@ $(".shuffle").on("click", function () {
     // 바퀴 수 체크
     if (nowNum >= 25) {
       roundNum = roundNum + 1;
-      $("#round").html(id + "님의 "+ "현재 " + roundNum + "바퀴");
+      $("#round").html(id + "님은 "+ "현재 " + roundNum + "바퀴");
       nowNum = nowNum - 24;
     } else {
 		$("#round").html(id + "님의 "+ "현재 " + roundNum + "바퀴");
@@ -125,12 +125,14 @@ $(".shuffle").on("click", function () {
   $.ajax({
 	type:'POST',
 	url: path + "/update",
-	data: {res : res,
-		clickCount : clickCount},
-	success:function(data){
+	data: {id : id,
+		res : res,
+		clickCount : clickCount,
+		roundNum : roundNum},
+	success:function(){
 		console.log(res);
 		console.log(clickCount);
-		console.log(data);
+		console.log(roundNum);
 	}
 	})
 });

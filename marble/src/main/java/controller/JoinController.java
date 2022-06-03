@@ -14,11 +14,13 @@ import mapper.MemberMapper;
 import service.JoinService;
 import service.LoginService;
 import vo.JoinParam;
+import vo.MemberVO;
 
 @WebServlet("/join")
 public class JoinController extends HttpServlet {
 	
 	JoinService joinService = new JoinService();
+	LoginService loginService = new LoginService();
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,10 +38,10 @@ public class JoinController extends HttpServlet {
 		JoinParam param = new JoinParam(id, password, email);
 		
 		String errorMessage = null;
-		String url = "/marble.jsp";
-
-		if(id == null || password == null || email == null) {
-			errorMessage = "가입정보에 입력하지 않는 정보가 있습니다.";
+		String url = null;
+		
+		if(id == "" || password == "" || email == "") {
+			errorMessage = "입력되지 않는 가입정보가 있습니다.";
 			url = "/join.jsp";
 		} else {
 			joinService.joinProcess(param);
