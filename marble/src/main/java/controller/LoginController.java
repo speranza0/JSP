@@ -35,7 +35,7 @@ public class LoginController extends HttpServlet {
 		String url = "/marble.jsp";
 		
 		if(member == null) {
-			errorMessage = "아이디가 존재하지 않습니다.";
+			errorMessage = "아이디를 입력해주세요.";
 			url = "/login.jsp";
 		} else {
 			if(password != null && !password.equals(member.getPassword())) {

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import db.JdbcUtils;
 import vo.JoinParam;
@@ -63,16 +64,42 @@ public class MemberMapper {
 		}
 	}
 	
-	public void updateRes(UserParam param) {
-		String sql = "update diceresult set dicesum = ?, dicecount = ? where id = ?";
+	public UserParam selectResById(String id) {
+		UserParam user = null;
+		String sql = "select * from diceresult where id = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, Integer.parseInt(param.getDicesum()));
-			pstmt.setInt(2, Integer.parseInt(param.getDicecount() + 1));
-			pstmt.setString(3, param.getId());
-			pstmt.executeUpdate();
+			pstmt.setString(1, id);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				user = new UserParam(rs.getString("id"), rs.getInt("dicesum"), rs.getInt("dicecount"), rs.getInt("roundnum"));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return user;
+	}
+	
+	public ArrayList<UserParam> getList() {
+		String sql = "select * from diceresult order by dicesum desc";
+		ArrayList<UserParam> list = new ArrayList<UserParam>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				String id = rs.getString("id");
+				int dicesum = rs.getInt("dicesum");
+				int dicecount = rs.getInt("dicecount");
+				int roundnum = rs.getInt("roundnum");
+				
+				UserParam paramList = new UserParam(id, dicesum, dicecount, roundnum);
+				list.add(paramList);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 }
